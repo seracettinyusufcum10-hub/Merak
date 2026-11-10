@@ -3,7 +3,7 @@ name: MERAK APK Derleme
 on:
   push:
     paths:
-      - 'MERAK-Android-v0.1-kaynak.zip'
+      - 'MERAK-KURULUM-KAYNAK.zip'
       - '.github/workflows/android.yml'
   workflow_dispatch:
 
@@ -32,8 +32,8 @@ jobs:
           gradle-version: '8.9'
       - name: Kaynak paketini ac
         run: |
-          test -f MERAK-Android-v0.1-kaynak.zip || { echo 'Kaynak ZIP dosyasi bulunamadi'; exit 1; }
-          unzip -q MERAK-Android-v0.1-kaynak.zip -d source
+          test -f MERAK-KURULUM-KAYNAK.zip || { echo 'Kaynak ZIP dosyasi bulunamadi'; exit 1; }
+          unzip -q MERAK-KURULUM-KAYNAK.zip -d source
           test -f source/MERAK-Android/settings.gradle.kts
       - name: Debug APK olustur
         run: gradle --no-daemon --stacktrace -p source/MERAK-Android :app:assembleDebug
