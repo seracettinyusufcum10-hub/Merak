@@ -1,0 +1,46 @@
+name: MERAK APK Derleme
+
+on:
+  push:
+    paths:
+      - 'MERAK-Android-v0.1-kaynak.zip'
+      - '.github/workflows/android.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Projeyi al
+        uses: actions/checkout@v4
+      - name: Java 17 hazirla
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - name: Android SDK hazirla
+        uses: android-actions/setup-android@v3
+      - name: Android SDK 35 yukle
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Gradle 8.9 hazirla
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+      - name: Kaynak paketini ac
+        run: |
+          test -f MERAK-Android-v0.1-kaynak.zip || { echo 'Kaynak ZIP dosyasi bulunamadi'; exit 1; }
+          unzip -q MERAK-Android-v0.1-kaynak.zip -d source
+          test -f source/MERAK-Android/settings.gradle.kts
+      - name: Debug APK olustur
+        run: gradle --no-daemon --stacktrace -p source/MERAK-Android :app:assembleDebug
+      - name: APK indirilebilir dosya olarak sakla
+        uses: actions/upload-artifact@v4
+        with:
+          name: MERAK-APK
+          path: source/MERAK-Android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
+          retention-days: 30
