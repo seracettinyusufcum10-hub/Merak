@@ -39,6 +39,11 @@ jobs:
           test -f MERAK-KURULUM-KAYNAK.zip || { echo 'Kaynak ZIP dosyasi bulunamadi'; exit 1; }
           unzip -q MERAK-KURULUM-KAYNAK.zip -d source
           test -f source/MERAK-Android/settings.gradle.kts
+      - name: MERAK kapak ve simgeyi duzelt
+        run: |
+          python3 -m venv /tmp/merak-venv
+          /tmp/merak-venv/bin/python -m pip install --quiet Pillow
+          /tmp/merak-venv/bin/python scripts/fix_cover.py source/MERAK-Android
       - name: Kotlin donus degerini duzelt
         run: |
           sed -i 's/^            (0 until pages.length()).mapNotNull/            return (0 until pages.length()).mapNotNull/' source/MERAK-Android/app/src/main/java/com/merak/app/MerakData.kt
