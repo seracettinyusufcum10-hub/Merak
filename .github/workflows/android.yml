@@ -39,6 +39,9 @@ jobs:
           test -f MERAK-KURULUM-KAYNAK.zip || { echo 'Kaynak ZIP dosyasi bulunamadi'; exit 1; }
           unzip -q MERAK-KURULUM-KAYNAK.zip -d source
           test -f source/MERAK-Android/settings.gradle.kts
+      - name: Kotlin donus degerini duzelt
+        run: |
+          sed -i 's/^            (0 until pages.length()).mapNotNull/            return (0 until pages.length()).mapNotNull/' source/MERAK-Android/app/src/main/java/com/merak/app/MerakData.kt
       - name: Debug APK olustur
         run: gradle --no-daemon --stacktrace -p source/MERAK-Android :app:assembleDebug
       - name: APK indirilebilir dosya olarak sakla
