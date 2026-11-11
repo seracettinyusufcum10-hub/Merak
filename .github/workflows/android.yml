@@ -46,6 +46,8 @@ jobs:
           /tmp/merak-venv/bin/python scripts/fix_cover.py source/MERAK-Android
       - name: Gunluk ruh hali ve arayuz duzeltmeleri
         run: python3 scripts/fix_mood_ui.py source/MERAK-Android
+      - name: Ilgi alanlari ve gunluk kesifler
+        run: python3 scripts/personalize_daily.py source/MERAK-Android
       - name: Kotlin donus degerini duzelt
         run: |
           sed -i 's/^            (0 until pages.length()).mapNotNull/            return (0 until pages.length()).mapNotNull/' source/MERAK-Android/app/src/main/java/com/merak/app/MerakData.kt
