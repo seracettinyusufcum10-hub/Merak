@@ -43,7 +43,7 @@ jobs:
       - name: MERAK kapak ve simgeyi duzelt
         run: |
           python3 -m venv /tmp/merak-venv
-          /tmp/merak-venv/bin/python -m pip install --quiet --only-binary=:all: Pillow==11.3.0==11.3.0
+          /tmp/merak-venv/bin/python -m pip install --quiet --only-binary=:all: Pillow==11.3.0
           /tmp/merak-venv/bin/python scripts/fix_cover.py source/MERAK-Android
       - name: Gunluk ruh hali ve arayuz duzeltmeleri
         run: python3 scripts/fix_mood_ui.py source/MERAK-Android
