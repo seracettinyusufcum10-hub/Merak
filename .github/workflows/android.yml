@@ -51,6 +51,12 @@ jobs:
         run: python3 scripts/personalize_daily.py source/MERAK-Android
       - name: Ag ve gizlilik guvenlik sertlestirmesi
         run: python3 scripts/security_harden.py source/MERAK-Android
+      - name: Yerel yedekleme kaynagini ekle
+        run: cp app-patches/MerakBackup.kt source/MERAK-Android/app/src/main/java/com/merak/app/MerakBackup.kt
+      - name: Yedek arayuzunu ve gizlilik mesajlarini duzenle
+        run: python3 scripts/backup_ui.py source/MERAK-Android
+      - name: Icerik ve veri guvenligi kalite testi
+        run: python3 scripts/quality_check.py source/MERAK-Android
       - name: Kotlin donus degerini duzelt
         run: |
           sed -i 's/^            (0 until pages.length()).mapNotNull/            return (0 until pages.length()).mapNotNull/' source/MERAK-Android/app/src/main/java/com/merak/app/MerakData.kt
