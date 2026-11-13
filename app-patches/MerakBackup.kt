@@ -114,7 +114,7 @@ object MerakBackup {
         val items = parse(text)
         val notes = items.keys.count { it.startsWith("note_") }
         val interests = (items["chosen_interests"] as? Set<*>)?.size ?: 0
-        return "\${items.size} kayıt, \$notes not, \$interests ilgi alanı."
+        return "${items.size} kayıt, $notes not, $interests ilgi alanı."
     }
 
     /**
